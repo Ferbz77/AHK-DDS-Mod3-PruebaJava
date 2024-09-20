@@ -3,8 +3,11 @@ package com.ahk.arg.forsale.demo.controllers;
 import com.ahk.arg.forsale.demo.models.entities.Zona;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +50,22 @@ public class ZonasController {
     public ModelAndView cargarUnaZona(Map<String, Object> model){
         model.put("title", "For Sale");
         return new ModelAndView("formZona", model);
+    }
+
+    @PostMapping("/guardar")
+    public ModelAndView guardarZona(@ModelAttribute Zona zona, Map<String, Object> model){  //le pasa los parametros a la vista
+        model.put("mensajeExito", "Se guardo con éxito!");
+        this.zonas.add(zona);
+
+        model.put("mensajeExito", "Se guardó la zona con éxito!");
+        return new ModelAndView("vistaExitoZona", model);
+    }
+
+    @PostMapping("/guardar2")
+    public RedirectView guardarZona(@ModelAttribute Zona zona){
+        this.zonas.add(zona);
+
+        return new RedirectView("/zonas");
     }
 }
 

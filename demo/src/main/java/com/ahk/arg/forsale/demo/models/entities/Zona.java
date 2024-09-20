@@ -9,5 +9,4 @@ public class Zona {
     private String nombre;
     private Float precio;
     private Integer id;
-
 }

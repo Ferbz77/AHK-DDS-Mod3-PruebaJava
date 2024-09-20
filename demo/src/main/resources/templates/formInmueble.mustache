@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Inmuebles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Crear Inmuebles</h1>
+    <form id= "form_inmueble" action="/inmuebles/crear" method="POST">
+        <div class="mb-3">
+            <label for="tipoInmueble" class="form-label">Tipo de Inmueble</label>
+            <select id="tipoInmueble" name="tipoInmueble" class="form-select" onchange="handlerCambioTipoInmueble()">
+                <option value="">Seleccione un tipo</option>
+                <option value="casa">Casa</option>
+                <option value="ph">PH</option>
+                <option value="departamento">Departamento</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <input name="cantAmbientes" class="form-control" placeholder="Cantidad de Ambientes" required>
+        </div>
+        <div class="mb-3">
+            <input name="tamanioEnM2" class="form-control" placeholder="Tamaño (m²)" required>
+        </div>
+
+        <!-- Atributos de CASA -->
+        <div class="mb-3 inmueble-fields" id="casaFields">
+            <input id="precio" name="precio" class="form-control" placeholder="Precio" style="display: none;">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Inmueble</button>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    function handlerCambioTipoInmueble() {
+        cambiarEndpoint();
+        mostrarCamposEspecificos();
+    }
+
+    function cambiarEndpoint() {
+        const valorTipoInmueble = document.getElementById("tipoInmueble").value;
+
+        if(valorTipoInmueble === "casa") {
+            document.getElementById("form_inmueble").action = "/inmuebles/crear/casa";
+        }
+        else if (valorTipoInmueble === "ph") {
+            document.getElementById("form_inmueble").action = "/inmuebles/crear/ph";
+        }
+        else {
+            document.getElementById("form_inmueble").action = "/inmuebles/crear/depto";
+        }
+
+    }
+
+    function mostrarCamposEspecificos() {
+        const valorTipoInmueble = document.getElementById("tipoInmueble").value;
+
+        if(valorTipoInmueble === "casa") {
+            document.getElementById("precio").style.display = "";
+        }
+        else {
+            document.getElementById("precio").style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>

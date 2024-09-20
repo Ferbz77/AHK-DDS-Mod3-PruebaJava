@@ -1,13 +1,13 @@
 package com.ahk.arg.forsale.demo.controllers;
 
-import com.ahk.arg.forsale.demo.models.entities.Casa;
-import com.ahk.arg.forsale.demo.models.entities.Inmueble;
-import com.ahk.arg.forsale.demo.models.entities.PH;
-import com.ahk.arg.forsale.demo.models.entities.Zona;
+import com.ahk.arg.forsale.demo.models.entities.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,4 +53,40 @@ public class InmueblesController {
         model.put("inmuebles", this.inmuebles);
         return new ModelAndView("inmuebles", model);
     }
+
+    @GetMapping("/2")
+    public ModelAndView listadoDeInmuebles2(Map<String, Object> model){
+        model.put("title", "For Sale");
+        model.put("inmuebles", this.inmuebles);
+        return new ModelAndView("inmuebles_2", model);
+    }
+
+    @GetMapping("/crear")
+    public ModelAndView formInmuebles(Map<String, Object> model){
+        model.put("title", "For Sale");
+        model.put("inmuebles", this.inmuebles);
+        return new ModelAndView("formInmueble", model);
+    }
+
+    @PostMapping("/crear/casa")
+    public RedirectView guardarCasa(@ModelAttribute Casa casa){  //le pasa los parametros a la vista
+        this.inmuebles.add(casa);
+
+        return new RedirectView("/inmuebles");
+    }
+
+    @PostMapping("/crear/ph")
+    public RedirectView guardarPh(@ModelAttribute PH ph){  //le pasa los parametros a la vista
+        this.inmuebles.add(ph);
+
+        return new RedirectView("/inmuebles");
+    }
+
+    @PostMapping("/crear/dpto")
+    public RedirectView guardarDpto(@ModelAttribute Depto depto){  //le pasa los parametros a la vista
+        this.inmuebles.add(depto);
+
+        return new RedirectView("/inmuebles");
+    }
+
 }
